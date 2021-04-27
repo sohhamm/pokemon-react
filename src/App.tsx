@@ -1,23 +1,15 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Pokemon from './components/Pokemon/Pokemon';
-import Header from './components/Navigation/Header';
-import Footer from './components/Navigation/Footer';
-import About from './components/About/About';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function App() {
   return (
     <Router>
-      <Header />
+      <Navbar />
       <Switch>
-        <Route>
-          <About path="/about" />
-        </Route>
-        <Route exact path="/">
-          <Pokemon />
+        <Route to="/pokemon">
+          <PokemonSearcher />
         </Route>
       </Switch>
-      <Footer />
     </Router>
   );
 }
