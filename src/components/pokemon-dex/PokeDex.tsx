@@ -10,7 +10,7 @@ const getPokemonNames = gql`
   }
 `;
 
-export default function PokemonFinder() {
+export default function PokeDex() {
   const { data, loading, error } = useQuery(getPokemonNames);
 
   if (error) return <p>error fetching pokemon names</p>;
@@ -19,6 +19,7 @@ export default function PokemonFinder() {
 
   return (
     <div>
+      {/* <Navbar /> */}
       {data.pokemon_v2_pokemon.map((pokemon) => (
         <div key={pokemon.order}>{pokemon.name}</div>
       ))}
