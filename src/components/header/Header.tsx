@@ -6,7 +6,6 @@ import {
   InputGroup,
   Icon,
   InputRightElement,
-  background,
 } from '@chakra-ui/react';
 import { MdSearch } from 'react-icons/md';
 import { FiFilter } from 'react-icons/fi';

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/header/Header';
 import Navbar from './components/navbar/Navbar';
 
-import PokeDex from './components/pokemon-dex/PokeDex';
+import PokeDex from './components/pokedex/PokeDex';
 
 function App() {
   return (

@@ -1,8 +1,9 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
+import { Grid } from '@chakra-ui/react';
 
 const getPokemonNames = gql`
-  query MyQuery {
+  query getPokemons {
     pokemon_v2_pokemon(limit: 20) {
       name
       order
@@ -18,11 +19,11 @@ export default function PokeDex() {
   if (loading) return <p>loading....</p>;
 
   return (
-    <div>
+    <Grid>
       {/* <Navbar /> */}
       {data.pokemon_v2_pokemon.map((pokemon) => (
         <div key={pokemon.order}>{pokemon.name}</div>
       ))}
-    </div>
+    </Grid>
   );
 }
