@@ -2,23 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { ApolloProvider } from '@apollo/client/react';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from './chakra-theme';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-const client = new ApolloClient({
-  uri: 'https://beta.pokeapi.co/graphql/v1beta',
-  cache: new InMemoryCache(),
-});
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
         <App />
-      </ChakraProvider>
-    </ApolloProvider>
+      </QueryClientProvider>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
