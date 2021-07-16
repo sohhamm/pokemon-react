@@ -33,7 +33,7 @@ export default function Home() {
   if (error) return <Text>error</Text>;
   if (isLoading) return <Text>loading..</Text>;
   return (
-    <Box w="100%">
+    <Box w="100%" bg="#0A122A">
       <SearchSection />
 
       <Flex direction="column">

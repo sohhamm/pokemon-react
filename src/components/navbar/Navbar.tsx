@@ -1,11 +1,13 @@
 // import * as React from 'react';
 
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Heading, Image } from '@chakra-ui/react';
+import pokeballImg from '../../assets/pokeball.png';
 
 export default function Navbar() {
   return (
-    <Flex p="1em">
-      <Heading size="md">Pokemon</Heading>
+    <Flex p="2em" position="sticky" bg="brand.bg">
+      <Heading color="brand.text">Pokedex</Heading>
+      <Image src={pokeballImg} boxSize={50} mb={2} ml={3} />
     </Flex>
   );
 }
