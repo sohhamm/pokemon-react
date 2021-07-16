@@ -1,7 +1,8 @@
 // import React from 'react';
 
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from 'react-query';
+import PokemonCard from '../components/pokemon-card/PokemonCard';
 import SearchSection from '../components/search-section/SearchSection';
 import { Pokemon } from '../types';
 
@@ -35,12 +36,11 @@ export default function Home() {
   return (
     <Box w="100%" bg="#0A122A">
       <SearchSection />
-
-      <Flex direction="column">
+      <SimpleGrid columns={3} spacing={10}>
         {pokemons.map((pokemon: Pokemon) => (
-          <Text>{pokemon.name}</Text>
+          <PokemonCard pokemon={pokemon} />
         ))}
-      </Flex>
+      </SimpleGrid>
     </Box>
   );
 }

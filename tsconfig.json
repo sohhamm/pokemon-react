@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -15,15 +17,17 @@
     "jsx": "react-jsx",
     "sourceMap": true,
     "declaration": true,
-    "noUnusedParameters": true,
     "incremental": true,
     "noFallthroughCasesInSwitch": true,
-    "experimentalDecorators": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": true
   },
-  "include": ["src/**/*", "pages"],
-  "exclude": ["node_modules", "build"]
+  "include": [
+    "src/**/*",
+    "pages"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
 }
