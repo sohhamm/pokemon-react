@@ -1,7 +1,8 @@
 // import React from 'react';
 
-import { Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from 'react-query';
+import SearchSection from '../components/search-section/SearchSection';
 import { Pokemon } from '../types';
 
 const URL = 'https://pokeapi.co/api/v2/pokemon';
@@ -32,10 +33,14 @@ export default function Home() {
   if (error) return <Text>error</Text>;
   if (isLoading) return <Text>loading..</Text>;
   return (
-    <Flex direction="column">
-      {pokemons.map((pokemon: Pokemon) => (
-        <Text>{pokemon.name}</Text>
-      ))}
-    </Flex>
+    <Box w="100%">
+      <SearchSection />
+
+      <Flex direction="column">
+        {pokemons.map((pokemon: Pokemon) => (
+          <Text>{pokemon.name}</Text>
+        ))}
+      </Flex>
+    </Box>
   );
 }

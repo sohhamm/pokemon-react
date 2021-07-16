@@ -1,7 +1,11 @@
 // import * as React from 'react';
 
-import { Flex } from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 
 export default function Navbar() {
-  return <Flex>navbar</Flex>;
+  return (
+    <Flex p="1em">
+      <Heading size="md">Pokemon</Heading>
+    </Flex>
+  );
 }
