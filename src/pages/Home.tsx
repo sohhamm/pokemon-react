@@ -36,9 +36,9 @@ export default function Home() {
   return (
     <Box w="100%" bg="#0A122A">
       <SearchSection />
-      <SimpleGrid columns={3} spacing={10}>
+      <SimpleGrid columns={3} spacing={10} border="white">
         {pokemons.map((pokemon: Pokemon) => (
-          <PokemonCard pokemon={pokemon} />
+          <PokemonCard pokemon={pokemon} key={pokemon.name} />
         ))}
       </SimpleGrid>
     </Box>
