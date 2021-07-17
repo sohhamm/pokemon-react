@@ -28,7 +28,7 @@ export default function PokemonCard({ pokemon }: any) {
   }: any = useQuery(['pokemon', url], () => getPokemonById(url));
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(pokemonInfo);
+  // console.log(pokemonInfo);
 
   const handleViewPokemon = () => {
     onOpen();
@@ -43,10 +43,11 @@ export default function PokemonCard({ pokemon }: any) {
         h="400px"
         w="280px"
         borderRadius="1px"
-        borderColor="red"
+        borderColor="yellow.100"
         direction="column"
         justify="center"
         align="center"
+        mx="auto"
       >
         <Image
           src={

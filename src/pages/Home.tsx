@@ -1,7 +1,7 @@
 // import React from 'react';
 
-import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
-import { useQuery, useQueryClient } from 'react-query';
+import { Box, SimpleGrid, Text } from '@chakra-ui/react';
+import { useQuery } from 'react-query';
 import PokemonCard from '../components/pokemon-card/PokemonCard';
 import SearchSection from '../components/search-section/SearchSection';
 import { useSearchStore } from '../store/search-store';
@@ -38,7 +38,13 @@ export default function Home() {
   return (
     <Box w="100%" bg="#0A122A">
       <SearchSection />
-      <SimpleGrid columns={3} spacing={10} border="white" mx="auto" w="100%">
+      <SimpleGrid
+        columns={{ sm: 1, md: 2, lg: 3 }}
+        spacing={10}
+        border="white"
+        mx="auto"
+        w="100%"
+      >
         {pokemons
           .filter((pokemon: Pokemon) =>
             pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())

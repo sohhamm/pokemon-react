@@ -24,7 +24,7 @@ export default function SearchSection() {
         position="sticky"
         top={0}
         zIndex={3}
-        w="40vw"
+        w={{ sm: '90vw', md: '70%', lg: '40vw' }}
         bg="brand.text"
         rounded="md"
       >
