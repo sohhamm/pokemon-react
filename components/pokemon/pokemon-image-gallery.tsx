@@ -43,6 +43,7 @@ export function PokemonImageGallery({ pokemon }: PokemonImageGalleryProps) {
                   src={pokemon.sprites.other["official-artwork"].front_default || "/placeholder.svg"}
                   alt={`${pokemon.name} normal`}
                   fill
+                  sizes="(max-width: 768px) 256px, 320px"
                   className="object-contain p-4 relative z-10 drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
@@ -74,6 +75,7 @@ export function PokemonImageGallery({ pokemon }: PokemonImageGalleryProps) {
                   }
                   alt={`${pokemon.name} shiny`}
                   fill
+                  sizes="(max-width: 768px) 256px, 320px"
                   className="object-contain p-4 relative z-10 drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
                 />
               </div>

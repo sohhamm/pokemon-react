@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Crown, Zap } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { getPokemon } from "@/lib/pokemon-service"
 
 interface EvolutionChain {
   chain: {
@@ -87,10 +88,7 @@ async function fetchPokemonSpecies(url: string): Promise<PokemonSpecies> {
   return response.json()
 }
 
-async function fetchPokemonDetail(id: number): Promise<PokemonDetail> {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-  return response.json()
-}
+// Remove this function - we'll use the optimized service instead
 
 function getTypeGradient(types: string[]) {
   const typeColors: Record<string, string> = {
@@ -192,7 +190,7 @@ function EvolutionStageComponent({ stage }: { stage: any }) {
 
   const { data: pokemon } = useQuery({
     queryKey: ["pokemon-detail", species?.id],
-    queryFn: () => fetchPokemonDetail(species!.id),
+    queryFn: () => getPokemon(species!.id),
     enabled: !!species,
   })
 
@@ -252,6 +250,7 @@ function EvolutionStageComponent({ stage }: { stage: any }) {
                 src={pokemon.sprites.other["official-artwork"].front_default || "/placeholder.svg"}
                 alt={species.name}
                 fill
+                sizes="(max-width: 768px) 120px, 160px"
                 className="object-contain relative z-10 drop-shadow-lg"
               />
             </div>

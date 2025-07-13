@@ -6,6 +6,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { PokemonFilters } from "@/components/pokemon/pokemon-filters"
 import { PokemonGrid } from "@/components/pokemon/pokemon-grid"
 import { AppNavigation } from "@/components/navigation/app-navigation"
+import { getPokemonList } from "@/lib/pokemon-service"
 
 interface Pokemon {
   id: number
@@ -35,26 +36,14 @@ const GENERATIONS = [
   { value: "5", label: "Gen V (494-649)", range: [494, 649] },
 ]
 
-async function fetchPokemonList(limit = 151) {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`)
-  const data = await response.json()
-
-  const pokemonDetails = await Promise.all(
-    data.results.map(async (pokemon: any, index: number) => {
-      const detailResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${index + 1}`)
-      return detailResponse.json()
-    }),
-  )
-
-  return pokemonDetails
-}
+// Remove this function - we'll use the optimized service instead
 
 export default function HomePage() {
   const { filters, setFilters, clearFilters } = usePokemonStore()
 
   const { data: pokemon = [], isLoading } = useQuery({
     queryKey: ["pokemon-list"],
-    queryFn: () => fetchPokemonList(151),
+    queryFn: () => getPokemonList(151),
     staleTime: 1000 * 60 * 5,
   })
 

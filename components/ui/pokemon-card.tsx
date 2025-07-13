@@ -134,6 +134,7 @@ export function PokemonCard({ pokemon, showNumber = true, size = "md" }: Pokemon
                 }
                 alt={pokemon.name}
                 fill
+                sizes="(max-width: 768px) 150px, 200px"
                 className="object-contain relative z-10 drop-shadow-lg"
               />
             </div>

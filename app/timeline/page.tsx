@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Calendar, Clock, Gamepad2, MapPin, Sparkles, Crown, Zap } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { getPokemonByGeneration } from "@/lib/pokemon-service"
 
 interface Pokemon {
   id: number
@@ -99,13 +100,7 @@ const GENERATIONS = [
   },
 ]
 
-async function fetchPokemonByGeneration(start: number, end: number) {
-  const pokemonPromises = []
-  for (let i = start; i <= Math.min(end, 151); i++) {
-    pokemonPromises.push(fetch(`https://pokeapi.co/api/v2/pokemon/${i}`).then((res) => res.json()))
-  }
-  return Promise.all(pokemonPromises)
-}
+// Remove this function - we'll use the optimized service instead
 
 function getTypeGradient(types: string[]) {
   const typeColors: Record<string, string> = {
@@ -148,7 +143,7 @@ export default function TimelinePage() {
     queryFn: () => {
       const gen = GENERATIONS.find((g) => g.id === selectedGeneration)
       if (!gen) return []
-      return fetchPokemonByGeneration(gen.range[0], gen.range[1])
+      return getPokemonByGeneration(gen.range[0], gen.range[1])
     },
   })
 
@@ -360,6 +355,7 @@ export default function TimelinePage() {
                               src={p.sprites.other["official-artwork"].front_default || "/placeholder.svg"}
                               alt={p.name}
                               fill
+                              sizes="(max-width: 768px) 64px, 80px"
                               className="object-contain relative z-10 drop-shadow-lg"
                             />
                           </div>

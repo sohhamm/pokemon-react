@@ -8,6 +8,7 @@ import Link from "next/link"
 import { EvolutionChain } from "@/components/evolution-chain"
 import { PokemonCombobox } from "@/components/ui/pokemon-combobox"
 import { Button } from "@/components/ui/button"
+import { getPokemonList } from "@/lib/pokemon-service"
 
 interface Pokemon {
   id: number
@@ -37,19 +38,7 @@ interface PokemonSpecies {
   capture_rate: number
 }
 
-async function fetchPokemonList() {
-  const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-  const data = await response.json()
-
-  const pokemonDetails = await Promise.all(
-    data.results.map(async (pokemon: any, index: number) => {
-      const detailResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${index + 1}`)
-      return detailResponse.json()
-    }),
-  )
-
-  return pokemonDetails
-}
+// Remove this function - we'll use the optimized service instead
 
 async function fetchPokemonSpecies(url: string): Promise<PokemonSpecies> {
   const response = await fetch(url)
@@ -87,7 +76,7 @@ export default function EvolutionPage() {
 
   const { data: pokemonList = [], isLoading } = useQuery({
     queryKey: ["pokemon-list"],
-    queryFn: fetchPokemonList,
+    queryFn: () => getPokemonList(151),
   })
 
   const selectedPokemonData = selectedPokemon[0] // Only use the first selected Pokemon

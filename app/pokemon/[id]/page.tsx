@@ -11,6 +11,7 @@ import { PokemonBasicInfo } from "@/components/pokemon/pokemon-basic-info"
 import { PokemonDetailedStats } from "@/components/pokemon/pokemon-detailed-stats"
 import { PokemonAbout } from "@/components/pokemon/pokemon-about"
 import { EvolutionChain } from "@/components/evolution-chain"
+import { getPokemon } from "@/lib/pokemon-service"
 
 interface PokemonDetail {
   id: number
@@ -57,10 +58,7 @@ interface PokemonSpecies {
   is_mythical: boolean
 }
 
-async function fetchPokemonDetail(id: string): Promise<PokemonDetail> {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-  return response.json()
-}
+// Remove this function - we'll use the optimized service instead
 
 async function fetchPokemonSpecies(url: string): Promise<PokemonSpecies> {
   const response = await fetch(url)
@@ -103,7 +101,7 @@ function getPowerLevel(stats: Array<{ base_stat: number; stat: { name: string } 
 export default function PokemonDetailPage({ params }: { params: { id: string } }) {
   const { data: pokemon, isLoading } = useQuery({
     queryKey: ["pokemon-detail", params.id],
-    queryFn: () => fetchPokemonDetail(params.id),
+    queryFn: () => getPokemon(parseInt(params.id)),
   })
 
   const { data: species } = useQuery({

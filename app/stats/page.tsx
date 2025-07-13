@@ -10,6 +10,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { PokemonStatsChart } from "@/components/pokemon-stats-chart"
 import { PokemonComparisonChart } from "@/components/pokemon-comparison-chart"
 import { PokemonCombobox } from "@/components/ui/pokemon-combobox"
+import { getPokemonList } from "@/lib/pokemon-service"
 
 interface Pokemon {
   id: number
@@ -28,19 +29,7 @@ interface Pokemon {
   }
 }
 
-async function fetchPokemonList() {
-  const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-  const data = await response.json()
-
-  const pokemonDetails = await Promise.all(
-    data.results.map(async (pokemon: any, index: number) => {
-      const detailResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${index + 1}`)
-      return detailResponse.json()
-    }),
-  )
-
-  return pokemonDetails
-}
+// Remove this function - we'll use the optimized service instead
 
 function getTypeGradient(types: string[]) {
   const typeColors: Record<string, string> = {
@@ -74,7 +63,7 @@ export default function StatsPage() {
 
   const { data: pokemonList = [], isLoading } = useQuery({
     queryKey: ["pokemon-list"],
-    queryFn: fetchPokemonList,
+    queryFn: () => getPokemonList(151),
   })
 
   const addPokemon = (pokemonId: string) => {
