@@ -307,7 +307,7 @@ export default function TypesPage() {
                       <div
                         key={defendingType}
                         className={`w-16 h-16 flex items-center justify-center text-xs font-bold text-white bg-gradient-to-r ${gradient} ${
-                          selectedType === defendingType ? "ring-4 ring-yellow-400 ring-opacity-75 z-10 relative" : ""
+                          selectedType === defendingType ? "ring-4 ring-yellow-400/75 z-10 relative" : ""
                         } shadow-lg hover:shadow-xl transition-all group cursor-pointer`}
                         title={defendingType}
                       >
@@ -326,7 +326,7 @@ export default function TypesPage() {
                     <div key={attackingType} className="flex hover:bg-gray-50 transition-colors">
                       <div
                         className={`w-24 h-16 flex items-center justify-center text-xs font-bold text-white bg-gradient-to-r ${attackingGradient} ${
-                          selectedType === attackingType ? "ring-4 ring-yellow-400 ring-opacity-75 z-10 relative" : ""
+                          selectedType === attackingType ? "ring-4 ring-yellow-400/75 z-10 relative" : ""
                         } shadow-lg hover:shadow-xl transition-all group cursor-pointer`}
                         title={attackingType}
                       >
@@ -348,7 +348,7 @@ export default function TypesPage() {
                               effectiveness,
                             )} ${
                               isHighlighted
-                                ? "ring-4 ring-yellow-400 ring-opacity-75 z-10 relative scale-110"
+                                ? "ring-4 ring-yellow-400/75 z-10 relative scale-110"
                                 : "hover:scale-105"
                             } text-white transition-all cursor-pointer group shadow-sm hover:shadow-lg`}
                             title={`${attackingType} vs ${defendingType}: ${getEffectivenessText(effectiveness)}`}

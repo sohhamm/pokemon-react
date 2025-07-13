@@ -189,7 +189,7 @@ export function PokemonCombobox({
                     >
                       {/* Pokemon Avatar */}
                       <div
-                        className={`w-12 h-12 rounded-full bg-gradient-to-r ${gradient} p-2 shadow-lg flex-shrink-0`}
+                        className={`w-12 h-12 rounded-full bg-gradient-to-r ${gradient} p-2 shadow-lg shrink-0`}
                       >
                         <img
                           src={pokemon.sprites.other["official-artwork"].front_default || "/placeholder.svg"}
@@ -207,8 +207,8 @@ export function PokemonCombobox({
                           <Combobox.ItemText className="font-semibold capitalize text-gray-900 truncate">
                             {pokemon.name}
                           </Combobox.ItemText>
-                          {powerLevel === "legendary" && <Crown className="w-3 h-3 text-yellow-500 flex-shrink-0" />}
-                          {powerLevel === "strong" && <Zap className="w-3 h-3 text-blue-500 flex-shrink-0" />}
+                          {powerLevel === "legendary" && <Crown className="w-3 h-3 text-yellow-500 shrink-0" />}
+                          {powerLevel === "strong" && <Zap className="w-3 h-3 text-blue-500 shrink-0" />}
                         </div>
 
                         {/* Types */}
@@ -228,7 +228,7 @@ export function PokemonCombobox({
                       </div>
 
                       {/* Selection Indicator */}
-                      <div className="flex-shrink-0">
+                      <div className="shrink-0">
                         {isSelected ? (
                           <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                             <span className="text-white text-xs">✓</span>
