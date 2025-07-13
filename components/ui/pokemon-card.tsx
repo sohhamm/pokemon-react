@@ -4,29 +4,41 @@ import Image from "next/image"
 import Link from "next/link"
 import { PokemonTypeBadge } from "./pokemon-type-badge"
 import { Star, Zap } from "lucide-react"
+import { SimplePokemon, Pokemon } from "@/lib/api/types"
 
-interface Pokemon {
-  id: number
-  name: string
-  types: Array<{ type: { name: string } }>
-  sprites: {
-    front_default?: string
-    other: {
-      "official-artwork": {
-        front_default: string
-      }
-    }
-  }
-  stats?: Array<{
-    base_stat: number
-    stat: { name: string }
-  }>
-}
+type PokemonData = SimplePokemon | Pokemon;
 
 interface PokemonCardProps {
-  pokemon: Pokemon
+  pokemon: PokemonData
   showNumber?: boolean
   size?: "sm" | "md" | "lg"
+}
+
+function isFullPokemon(pokemon: PokemonData): pokemon is Pokemon {
+  return 'height' in pokemon && 'weight' in pokemon;
+}
+
+function getPokemonTypes(pokemon: PokemonData): string[] {
+  if ('types' in pokemon && Array.isArray(pokemon.types)) {
+    if (typeof pokemon.types[0] === 'string') {
+      return pokemon.types as string[];
+    } else {
+      return (pokemon.types as any[]).map((t) => t.type.name);
+    }
+  }
+  return [];
+}
+
+function getPokemonSprite(pokemon: PokemonData): string {
+  if ('sprite' in pokemon && pokemon.sprite) {
+    return pokemon.sprite;
+  }
+  if ('sprites' in pokemon) {
+    return pokemon.sprites.other?.['official-artwork']?.front_default ||
+           pokemon.sprites.front_default ||
+           '/placeholder.svg';
+  }
+  return '/placeholder.svg';
 }
 
 function getTypeGradient(types: string[]) {
@@ -68,12 +80,16 @@ export function PokemonCard({ pokemon, showNumber = true, size = "md" }: Pokemon
     lg: "h-80",
   }
 
-  const types = pokemon.types.map((t) => t.type.name)
+  const types = getPokemonTypes(pokemon);
   const gradient = getTypeGradient(types)
+  const sprite = getPokemonSprite(pokemon);
 
-  // Calculate total stats for power indicator
-  const totalStats = pokemon.stats?.reduce((sum, stat) => sum + stat.base_stat, 0) || 0
-  const powerLevel = totalStats > 500 ? "legendary" : totalStats > 400 ? "strong" : "normal"
+  // Calculate total stats for power indicator (only for full Pokemon data)
+  let powerLevel = "normal";
+  if (isFullPokemon(pokemon) && pokemon.stats) {
+    const totalStats = pokemon.stats.reduce((sum, stat) => sum + stat.base_stat, 0);
+    powerLevel = totalStats > 500 ? "legendary" : totalStats > 400 ? "strong" : "normal";
+  }
 
   return (
     <Link href={`/pokemon/${pokemon.id}`}>
@@ -126,12 +142,7 @@ export function PokemonCard({ pokemon, showNumber = true, size = "md" }: Pokemon
             <div className={`relative ${sizeClasses[size]} group-hover:scale-110 transition-transform duration-300`}>
               <div className="absolute inset-0 bg-white/50 rounded-full blur-xl group-hover:bg-white/70 transition-colors" />
               <Image
-                src={
-                  pokemon.sprites.other["official-artwork"].front_default ||
-                  pokemon.sprites.front_default ||
-                  "/placeholder.svg" ||
-                  "/placeholder.svg"
-                }
+                src={sprite}
                 alt={pokemon.name}
                 fill
                 sizes="(max-width: 768px) 150px, 200px"
@@ -148,10 +159,10 @@ export function PokemonCard({ pokemon, showNumber = true, size = "md" }: Pokemon
 
             {/* Type Badges */}
             <div className="flex gap-1 justify-center">
-              {pokemon.types.map((type, index) => (
+              {types.map((type, index) => (
                 <PokemonTypeBadge
-                  key={type.type.name}
-                  type={type.type.name}
+                  key={type}
+                  type={type}
                   size="sm"
                   className={`shadow-md ${index === 0 ? "ring-2 ring-white/50" : ""}`}
                 />
@@ -159,7 +170,7 @@ export function PokemonCard({ pokemon, showNumber = true, size = "md" }: Pokemon
             </div>
 
             {/* Stats Preview */}
-            {pokemon.stats && (
+            {isFullPokemon(pokemon) && pokemon.stats && (
               <div className="flex justify-center gap-2 text-xs">
                 <div className="bg-white/80 px-2 py-1 rounded-full">
                   <span className="font-medium">HP: {pokemon.stats.find((s) => s.stat.name === "hp")?.base_stat}</span>

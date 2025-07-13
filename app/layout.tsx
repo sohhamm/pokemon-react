@@ -1,10 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import { Providers } from "./providers"
-
-const inter = Inter({ subsets: ["latin"] })
+import { AppNavigation } from "@/components/navigation/app-navigation"
 
 export const metadata: Metadata = {
   title: "Pokedex - Pokemon Explorer",
@@ -20,8 +18,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
+      <head>
+        <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet" />
+        <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap" rel="stylesheet" />
+      </head>
+      <body>
+        <Providers>
+          <AppNavigation />
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   )

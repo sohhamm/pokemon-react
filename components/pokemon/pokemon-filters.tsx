@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { createListCollection } from "@ark-ui/react/select"
 import { Search, Filter, X } from "lucide-react"
 
 const POKEMON_TYPES = [
@@ -31,6 +32,7 @@ const POKEMON_TYPES = [
 ]
 
 const GENERATIONS = [
+  { value: "all", label: "All Generations" },
   { value: "1", label: "Gen I (1-151)", range: [1, 151] },
   { value: "2", label: "Gen II (152-251)", range: [152, 251] },
   { value: "3", label: "Gen III (252-386)", range: [252, 386] },
@@ -68,6 +70,10 @@ export function PokemonFilters({
       onFiltersChange({ types: filters.types.filter((t) => t !== type) })
     }
   }
+
+  const generationCollection = createListCollection({
+    items: GENERATIONS,
+  })
 
   const hasActiveFilters = filters.name || filters.types.length > 0 || filters.generation
 
@@ -109,14 +115,20 @@ export function PokemonFilters({
             {/* Generation Filter */}
             <div>
               <Label className="text-sm font-medium mb-2 block">Generation</Label>
-              <Select value={filters.generation} onValueChange={(value) => onFiltersChange({ generation: value })}>
+              <Select 
+                collection={generationCollection}
+                value={[filters.generation || "all"]}
+                onValueChange={(details) => {
+                  const value = details.value[0]
+                  onFiltersChange({ generation: value === "all" ? "" : value })
+                }}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="All Generations" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Generations</SelectItem>
-                  {GENERATIONS.map((gen) => (
-                    <SelectItem key={gen.value} value={gen.value}>
+                  {generationCollection.items.map((gen) => (
+                    <SelectItem key={gen.value} item={gen}>
                       {gen.label}
                     </SelectItem>
                   ))}
@@ -133,7 +145,7 @@ export function PokemonFilters({
                     <Checkbox
                       id={type}
                       checked={filters.types.includes(type)}
-                      onCheckedChange={(checked) => handleTypeFilter(type, checked as boolean)}
+                      onCheckedChange={(details) => handleTypeFilter(type, Boolean(details.checked))}
                     />
                     <Label htmlFor={type} className="text-sm capitalize">
                       {type}

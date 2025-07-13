@@ -1,30 +1,13 @@
-"use client"
+"use client";
 
-import { PokemonCard } from "@/components/ui/pokemon-card"
-
-interface Pokemon {
-  id: number
-  name: string
-  types: Array<{ type: { name: string } }>
-  sprites: {
-    front_default?: string
-    other: {
-      "official-artwork": {
-        front_default: string
-      }
-    }
-  }
-  stats?: Array<{
-    base_stat: number
-    stat: { name: string }
-  }>
-}
+import { PokemonCard } from "@/components/ui/pokemon-card";
+import { SimplePokemon } from "@/lib/api/types";
 
 interface PokemonGridProps {
-  pokemon: Pokemon[]
-  loading?: boolean
-  emptyMessage?: string
-  onClearFilters?: () => void
+  pokemon: SimplePokemon[];
+  loading?: boolean;
+  emptyMessage?: string;
+  onClearFilters?: () => void;
 }
 
 export function PokemonGrid({ pokemon, loading, emptyMessage, onClearFilters }: PokemonGridProps) {
@@ -49,7 +32,7 @@ export function PokemonGrid({ pokemon, loading, emptyMessage, onClearFilters }: 
           </div>
         ))}
       </div>
-    )
+    );
   }
 
   if (pokemon.length === 0) {
@@ -71,7 +54,7 @@ export function PokemonGrid({ pokemon, loading, emptyMessage, onClearFilters }: 
           )}
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -80,5 +63,5 @@ export function PokemonGrid({ pokemon, loading, emptyMessage, onClearFilters }: 
         <PokemonCard key={p.id} pokemon={p} />
       ))}
     </div>
-  )
+  );
 }
